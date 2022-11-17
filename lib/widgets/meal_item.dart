@@ -9,6 +9,7 @@ class MealItem extends StatelessWidget {
   final int duration;
   final Complexity complexity;
   final Affordability affordability;
+  final Function removeItem;
 
   const MealItem({
     super.key,
@@ -18,6 +19,7 @@ class MealItem extends StatelessWidget {
     required this.duration,
     required this.affordability,
     required this.complexity,
+    required this.removeItem,
   });
 
   String get complexityText {
@@ -47,10 +49,18 @@ class MealItem extends StatelessWidget {
   }
 
   void selectMeal(context) {
-    Navigator.of(context).pushNamed(
+    Navigator.of(context)
+        .pushNamed(
       MealDetailScreen.routeName,
       arguments: id,
-    );
+    )
+        .then((result) {
+      //this line is executed when the page is popped which was pushed earlier
+      // print(result);
+      if (result != null) {
+        removeItem(result);
+      }
+    });
   }
 
   Widget dataDisplay(IconData icons, String data) {
