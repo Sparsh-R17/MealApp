@@ -10,6 +10,7 @@ class MealItem extends StatelessWidget {
   final Complexity complexity;
   final Affordability affordability;
   final Function removeItem;
+  final bool isVegetarian;
 
   const MealItem({
     super.key,
@@ -20,6 +21,7 @@ class MealItem extends StatelessWidget {
     required this.affordability,
     required this.complexity,
     required this.removeItem,
+    required this.isVegetarian,
   });
 
   String get complexityText {
@@ -83,6 +85,7 @@ class MealItem extends StatelessWidget {
     return InkWell(
       onTap: () => selectMeal(context),
       child: Card(
+        color: isVegetarian ? Colors.green.shade50 : Colors.red.shade50,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),

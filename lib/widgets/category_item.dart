@@ -26,10 +26,13 @@ class CategoryItem extends StatelessWidget {
     //   ),
     // );
 
-    Navigator.of(ctx).pushNamed(CategoryMealsScreen.routeName, arguments: {
-      'id': id,
-      'title': title,
-    });
+    Navigator.of(ctx).pushNamed(
+      CategoryMealsScreen.routeName,
+      arguments: {
+        'id': id,
+        'title': title,
+      },
+    );
   }
 
   @override
