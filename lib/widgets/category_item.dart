@@ -44,15 +44,16 @@ class CategoryItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                bgcolor.withOpacity(0.7),
-                bgcolor,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(15)),
+          gradient: LinearGradient(
+            colors: [
+              bgcolor.withOpacity(0.7),
+              bgcolor,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+          borderRadius: BorderRadius.circular(15),
+        ),
         child: Center(
           child: Text(
             title,

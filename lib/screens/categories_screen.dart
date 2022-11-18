@@ -7,6 +7,8 @@ class CategoriesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pageWidth = MediaQuery.of(context).size.width;
+
     return NotificationListener<OverscrollIndicatorNotification>(
       onNotification: (overscroll) {
         overscroll.disallowIndicator();
@@ -14,8 +16,8 @@ class CategoriesScreen extends StatelessWidget {
       },
       child: GridView(
         padding: const EdgeInsets.all(10),
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 200, //the max width any grid can have
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: pageWidth * 0.5, //the max width any grid can have
           childAspectRatio: 1.2, //the ratio of height to width
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,

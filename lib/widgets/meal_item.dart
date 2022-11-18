@@ -86,6 +86,9 @@ class MealItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pageHeight = MediaQuery.of(context).size.height;
+    final pageWidth = MediaQuery.of(context).size.width;
+
     return InkWell(
       onTap: () => selectMeal(context),
       child: Card(
@@ -106,7 +109,7 @@ class MealItem extends StatelessWidget {
                   ),
                   child: Image.network(
                     imageUrl,
-                    height: 250,
+                    height: pageHeight * 0.26,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -116,7 +119,7 @@ class MealItem extends StatelessWidget {
                   right: 0,
                   child: Container(
                     color: Colors.black54,
-                    width: 250,
+                    width: pageWidth * 0.7,
                     padding: const EdgeInsets.symmetric(
                       vertical: 5,
                       horizontal: 20,

@@ -17,7 +17,7 @@ class MealDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget buildContainerBox(Widget child) {
+  Widget buildContainerBox(final pageHeight, final pageWidth, Widget child) {
     return Container(
       margin: const EdgeInsets.all(10),
       padding: const EdgeInsets.all(7),
@@ -26,8 +26,8 @@ class MealDetailScreen extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.grey),
       ),
-      height: 180,
-      width: 300,
+      height: pageHeight * 0.2,
+      width: pageWidth * 0.8,
       child: child,
     );
   }
@@ -36,6 +36,8 @@ class MealDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final mealId = ModalRoute.of(context)?.settings.arguments as String;
     final selectedMeal = DUMMY_MEALS.firstWhere((meal) => meal.id == mealId);
+    final pageHeight = MediaQuery.of(context).size.height;
+    final pageWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -46,16 +48,21 @@ class MealDetailScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                selectedMeal.imageUrl,
-                height: 300,
-                width: double.infinity,
+              borderRadius: BorderRadius.circular(15.0),
+              child: SizedBox.fromSize(
+                child: Image.network(
+                  selectedMeal.imageUrl,
+                  fit: BoxFit.fill,
+                  height: pageHeight * 0.3,
+                  width: double.infinity,
+                ),
               ),
             ),
           ),
           buildSectionTitle(context, 'Ingredients'),
           buildContainerBox(
+            pageHeight,
+            pageWidth,
             ListView.builder(
               itemCount: selectedMeal.ingredients.length,
               itemBuilder: (context, index) {
@@ -76,6 +83,8 @@ class MealDetailScreen extends StatelessWidget {
           ),
           buildSectionTitle(context, 'Steps'),
           buildContainerBox(
+            pageHeight,
+            pageWidth,
             ListView.builder(
               itemCount: selectedMeal.steps.length,
               itemBuilder: (context, index) {
