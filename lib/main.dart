@@ -26,31 +26,51 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favoriteMeal = [];
 
   void _setFilters(Map<String, bool> filterData) {
-    setState(() {
-      _filters = filterData;
+    setState(
+      () {
+        _filters = filterData;
 
-      _availableMeals = DUMMY_MEALS.where(
-        (meal) {
-          if (_filters['gluten']! && !meal.isGlutenFree) {
-            return false;
-          }
-          if (_filters['vegan']! && !meal.isVegan) {
-            return false;
-          }
-          if (_filters['lactose']! && !meal.isLactoseFree) {
-            return false;
-          }
-          if (_filters['vegetarian']! && !meal.isVegetarian) {
-            return false;
-          }
+        _availableMeals = DUMMY_MEALS.where(
+          (meal) {
+            if (_filters['gluten']! && !meal.isGlutenFree) {
+              return false;
+            }
+            if (_filters['vegan']! && !meal.isVegan) {
+              return false;
+            }
+            if (_filters['lactose']! && !meal.isLactoseFree) {
+              return false;
+            }
+            if (_filters['vegetarian']! && !meal.isVegetarian) {
+              return false;
+            }
 
-          return true;
-          //...
-        },
-      ).toList();
-    });
+            return true;
+            //...
+          },
+        ).toList();
+      },
+    );
+  }
+
+  void _toggleFavorite(String mealId) {
+    final existingIndex = _favoriteMeal.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteMeal.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteMeal.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
+      });
+    }
+  }
+
+  bool _isMealFavorite(String mealId) {
+    return _favoriteMeal.any((meal) => meal.id == mealId);
   }
 
   @override
@@ -80,9 +100,14 @@ class _MyAppState extends State<MyApp> {
       ),
       // home: const MyHomePage(),
       routes: {
-        '/': (context) => const TabsScreen(),
-        CategoryMealsScreen.routeName: (context) =>
-            CategoryMealsScreen(availableMeals: _availableMeals),
+        '/': (context) => TabsScreen(
+            isMealFavorite: _isMealFavorite,
+            toggleFavorite: _toggleFavorite,
+            favoriteMeals: _favoriteMeal),
+        CategoryMealsScreen.routeName: (context) => CategoryMealsScreen(
+            isMealFavorite: _isMealFavorite,
+            toggleFavorite: _toggleFavorite,
+            availableMeals: _availableMeals),
         MealDetailScreen.routeName: (context) => const MealDetailScreen(),
         FilterScreen.routeName: (context) =>
             FilterScreen(currentFilters: _filters, saveFilters: _setFilters),

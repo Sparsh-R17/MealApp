@@ -11,6 +11,8 @@ class MealItem extends StatelessWidget {
   final Affordability affordability;
   final Function removeItem;
   final bool isVegetarian;
+  final Function toggleFavorite;
+  final Function isMealFavorite;
 
   const MealItem({
     super.key,
@@ -22,6 +24,8 @@ class MealItem extends StatelessWidget {
     required this.complexity,
     required this.removeItem,
     required this.isVegetarian,
+    required this.toggleFavorite,
+    required this.isMealFavorite,
   });
 
   String get complexityText {
@@ -138,6 +142,15 @@ class MealItem extends StatelessWidget {
                   dataDisplay(Icons.schedule, '$duration min'),
                   dataDisplay(Icons.work, complexityText),
                   dataDisplay(Icons.attach_money, affordabilityText),
+                  IconButton(
+                    onPressed: () => toggleFavorite(id),
+                    icon: isMealFavorite(id)
+                        ? Icon(
+                            Icons.favorite,
+                            color: Theme.of(context).colorScheme.primary,
+                          )
+                        : const Icon(Icons.favorite_border),
+                  )
                 ],
               ),
             )
